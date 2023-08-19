@@ -51,3 +51,14 @@ let g:go_auto_type_info = 1
 
 autocmd FileType go nmap <leader>h  <Plug>(go-referrers)
 
+
+" lsp support for python (todo: check if pylsp is available)
+packadd lsp
+call LspAddServer([#{name: 'pylsp',
+                 \   filetype: 'python',
+                 \   path: '/usr/local/bin/pylsp',
+                 \   args: []
+                 \ }])
+autocmd FileType python nmap gd :LspGotoDefinition<CR>
+
+
