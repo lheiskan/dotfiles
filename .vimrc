@@ -49,7 +49,7 @@ set incsearch
 let g:go_fmt_command = "goimports"    
 let g:go_auto_type_info = 1
 
-autocmd FileType go nmap <leader>h  <Plug>(go-referrers)
+autocmd FileType go nnoremap <leader>h  <Plug>(go-referrers)
 
 
 " lsp support for python (todo: check if pylsp is available)
@@ -61,4 +61,17 @@ call LspAddServer([#{name: 'pylsp',
                  \ }])
 autocmd FileType python nmap gd :LspGotoDefinition<CR>
 
+" quick edit|source .vimrc
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" quick exit insert mode
+:inoremap jk <esc>
+:inoremap <esc> <nop>
+
+"disable arrow keys
+:nnoremap <left> <nop>
+:nnoremap <right> <nop>
+:nnoremap <up> <nop>
+:nnoremap <down> <nop>
 
