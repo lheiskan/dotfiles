@@ -13,6 +13,9 @@ set fileencoding=utf-8
 " highlight with star
 set hlsearch
 
+" set working directory to the dir of the actieve buffer automatically
+set autochdir
+
 autocmd Filetype go setlocal tabstop=4 shiftwidth=4 softtabstop=4
 " ts - show existing tab with 4 spaces width
 " sw - when indenting with '>', use 4 spaces width
@@ -79,3 +82,18 @@ autocmd FileType python nmap gd :LspGotoDefinition<CR>
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" asyncomplete setup
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'allowlist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+inoremap <c-space> <Plug>(asyncomplete_force_refresh)
+
+
