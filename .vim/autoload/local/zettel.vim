@@ -20,3 +20,22 @@ endfunc
 
 
 
+func! local#zettel#todo(...)
+
+  " build the file name
+  let l:sep = ''
+  if len(a:000) > 0
+    let l:sep = '-'
+  endif
+  let l:fname = expand('~/wiki/todo.md')
+
+  " edit the new file
+  exec "e " . l:fname
+
+  if len(a:000) > 0
+    exec "normal! gg:silent!?^*\<cr>o* \<c-r>=strftime('%Y-%m-%d %H:%M')\<cr>: " . join(a:000) . "\<esc>"
+  else
+    exec "normal! gg:silent!?^*\<cr>o* \<c-r>=strftime('%Y-%m-%d %H:%M')\<cr>: " | startinsert
+  endif
+  
+endfunc

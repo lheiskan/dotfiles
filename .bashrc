@@ -10,3 +10,7 @@ set -o vi
 zet() {
   vim "+Zet $*"
 }
+
+todo() {
+  vim "+Todo $*"
+}
