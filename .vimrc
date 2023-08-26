@@ -1,3 +1,19 @@
+call plug#begin()
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'vim-airline/vim-airline'
+Plug 'fatih/vim-go', { 'tag': '*' }
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/tpope/vim-vinegar'
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'github/copilot.vim'
+
+" Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+
 syntax on
 colo pablo
 
@@ -55,22 +71,54 @@ let g:go_auto_type_info = 1
 autocmd FileType go nnoremap <leader>h  <Plug>(go-referrers)
 
 
-" lsp support for python (todo: check if pylsp is available)
-packadd lsp
-call LspAddServer([#{name: 'pylsp',
-                 \   filetype: 'python',
-                 \   path: '/usr/local/bin/pylsp',
-                 \   args: []
-                 \ }])
-autocmd FileType python nmap gd :LspGotoDefinition<CR>
+if executable('pylsp')
+    " pip install python-lsp-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pylsp',
+        \ 'cmd': {server_info->['pylsp']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 " quick edit|source .vimrc
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+":nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+:nnoremap <leader>ev :e! $MYVIMRC<cr>
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " quick exit insert mode
-:inoremap jk <esc>
-:inoremap <esc> <nop>
+:inoremap kj <esc>
+:inoremap jk  <esc>
+
+
 
 "disable arrow keys
 :nnoremap <left> <nop>
@@ -82,18 +130,4 @@ autocmd FileType python nmap gd :LspGotoDefinition<CR>
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" asyncomplete setup
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'allowlist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
-    \ }))
-
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-inoremap <c-space> <Plug>(asyncomplete_force_refresh)
-
 
