@@ -119,6 +119,9 @@ alias lt='eza --tree --level=2 --long --icons --git'
 alias http=xh
 alias cat=bat --style full "$@"
 
+# fzf combined with a preview
+alias fzfb="fzf --preview 'bat --style=numbers --color=always {}'"
+
 # aliases do not support setting environment variables, so use a function instead
 function v() {
     NVIM_APPNAME=neovim/lazyvim nvim "$@"
