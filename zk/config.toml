@@ -107,8 +107,14 @@ ney = 'zk new --no-input "$ZK_NOTEBOOK_DIR" --group youtube --title $argv'
 # tool notes
 tool = 'zk new --no-input "$ZK_NOTEBOOK_DIR" --template tool.md --title $argv'
 
+# something to check out
+check = 'zk new --no-input "$ZK_NOTEBOOK_DIR" --template check.md --title $argv'
+
 # keyboard shortcut notes
 ks = 'zk new --no-input "$ZK_NOTEBOOK_DIR" --template ks.md --title $argv'
+
+# workflow description/notes,tips, ...
+flow = 'zk new --no-input "$ZK_NOTEBOOK_DIR" --template flow.md --title $argv'
 
 # idea
 idea = 'zk new --no-input "$ZK_NOTEBOOK_DIR" --template idea.md --title $argv'
