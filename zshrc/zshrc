@@ -124,7 +124,7 @@ alias fzfb="fzf --preview 'bat --style=numbers --color=always {}'"
 
 # aliases do not support setting environment variables, so use a function instead
 function v() {
-    NVIM_APPNAME=neovim/lazyvim nvim "$@"
+    nvim "$@"
 }
 
 # combine cd and ls into a single command
