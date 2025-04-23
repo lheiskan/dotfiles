@@ -24,6 +24,9 @@ return {
         path = "~/github/notes",
       },
     },
+    ui = {
+	enable=false,
+    },
 
     -- see below for full list of options 👇
   },
