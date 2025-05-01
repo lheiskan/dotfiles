@@ -5,7 +5,7 @@ local wk = require("which-key")
 vim.keymap.set("n", "<Leader>hh", ":help personal-tips<cr>")
 
 -- More sensible jump mappings.
-vim.keymap.set("v", "L", "$h")
+vim.keymap.set("v", "L", "$h") -- end of line, one left for no newline
 vim.keymap.set("v", "$", "$h")
 vim.keymap.set("n", "L", "$")
 
@@ -94,6 +94,23 @@ wk.add({
 			vim.cmd(string.format("e %s", dirname))
 		end,
 		desc = "Open buffer's directory",
+	},
+})
+
+-- Jump to configs
+wk.add({
+	{ "<Leader>k", group = "[K]onfig" },
+	{
+		"<Leader>kf",
+		function()
+			CONFIG_HOME = vim.env.XDG_CONFIG_HOME or vim.env.HOME .. "/.config"
+			local fk_opts = {
+				cwd = vim.env.XDG_CONFIG_HOME,
+				results_title = "Config",
+			}
+			require("telescope.builtin").find_files(fk_opts)
+		end,
+		desc = "Find a [K]onfig file",
 	},
 })
 
