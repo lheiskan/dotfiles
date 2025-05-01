@@ -103,12 +103,10 @@ wk.add({
 	{
 		"<Leader>kf",
 		function()
-			CONFIG_HOME = vim.env.XDG_CONFIG_HOME or vim.env.HOME .. "/.config"
-			local fk_opts = {
-				cwd = vim.env.XDG_CONFIG_HOME,
+			require("telescope.builtin").find_files({
+				cwd = vim.fn.stdpath("config"),
 				results_title = "Config",
-			}
-			require("telescope.builtin").find_files(fk_opts)
+			})
 		end,
 		desc = "Find a [K]onfig file",
 	},
