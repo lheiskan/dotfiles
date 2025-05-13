@@ -110,6 +110,32 @@ wk.add({
 		end,
 		desc = "Find a [K]onfig file",
 	},
+	{
+		"<Leader>kg",
+		function()
+			require("telescope.builtin").live_grep({
+				cwd = vim.fn.stdpath("config"),
+				results_title = "Configs",
+			})
+		end,
+		desc = "Find a [K]onfig file",
+	},
+})
+
+-- search language reference
+wk.add({
+	{ "<Leader>r", group = "[R]eference" },
+	{
+		"<Leader>rr",
+		function()
+			require("telescope.builtin").live_grep({
+				cwd = "~/docs/go",
+				glob_pattern = "*.md",
+				results_title = "GO Language reference",
+			})
+		end,
+		desc = "Search the GO language reference",
+	},
 })
 
 -- OS command shortcuts.
