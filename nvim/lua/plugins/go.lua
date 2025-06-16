@@ -1,5 +1,6 @@
 return {
   "ray-x/go.nvim",
+  enabled = true,
   dependencies = { -- optional packages
     "ray-x/guihua.lua",
     "neovim/nvim-lspconfig",
@@ -23,6 +24,9 @@ return {
   end,
   keys = {
     { "<leader>cb", "<cmd>GoBuild<CR>", desc = "GoBuild", ft = "go" },
+    { "<leader>t", group = "Test", desc = "Test" },
+    { "<leader>tt", "<cmd>GoTest<cr>", desc = "GoTest", ft = "go" },
+    { "<leader>tf", "<cmd>GoTestFunc<cr>", desc = "GoTestFunc", ft = "go" },
   },
   event = { "CmdlineEnter" },
   ft = { "go", "gomod" },

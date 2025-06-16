@@ -12,7 +12,7 @@ after-login-command = []
 after-startup-command = []
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -96,6 +96,10 @@ automatically-unhide-macos-hidden-apps = false
     #     activate
     # end tell'
     # '''
+    # alt-a = 'exec-and-forget open -n /Applications/Zen.app'
+
+    # App mode
+    alt-a = 'mode app'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
@@ -128,12 +132,12 @@ automatically-unhide-macos-hidden-apps = false
     alt-7 = 'workspace 7'
     alt-8 = 'workspace 8'
     alt-9 = 'workspace 9'
-    alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
+    # alt-a = 'workspace A' # app mode
     alt-b = 'workspace B'
     alt-c = 'workspace C'
     alt-d = 'workspace D'
     alt-e = 'workspace E'
-    alt-f = 'workspace F'
+    # alt-f = 'workspace F' -- do not capture alt-f (i.e. M-f, snacks picker follow mode)
     alt-g = 'workspace G'
     alt-i = 'workspace I'
     alt-m = 'workspace M'
@@ -163,12 +167,12 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-7 = 'move-node-to-workspace 7'
     alt-shift-8 = 'move-node-to-workspace 8'
     alt-shift-9 = 'move-node-to-workspace 9'
-    alt-shift-a = 'move-node-to-workspace A'
+#    alt-shift-a = 'move-node-to-workspace A'
     alt-shift-b = 'move-node-to-workspace B'
     alt-shift-c = 'move-node-to-workspace C'
     alt-shift-d = 'move-node-to-workspace D'
     alt-shift-e = 'move-node-to-workspace E'
-    alt-shift-f = 'move-node-to-workspace F'
+# alt-shift-f = 'move-node-to-workspace F'
     alt-shift-g = 'move-node-to-workspace G'
     alt-shift-i = 'move-node-to-workspace I'
     alt-shift-m = 'move-node-to-workspace M'
@@ -213,3 +217,7 @@ automatically-unhide-macos-hidden-apps = false
     down = 'volume down'
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
+
+[mode.app.binding]
+    alt-b = ['exec-and-forget open -n /Applications/Zen.app', 'mode main']
+    alt-B = ['exec-and-forget open -n /Applications/Google Chrome.app.app', 'mode main']
