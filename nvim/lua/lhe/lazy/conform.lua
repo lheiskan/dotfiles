@@ -10,6 +10,7 @@ return {
                 javascript = { "prettierd", "prettier", stop_after_first = true },
                 go = { "gofmt", "goimports", "injected" },
                 xml = { "xmllint" },
+                sql = { "sql_formatter" },
             },
             formatters = {
                 injected = {
