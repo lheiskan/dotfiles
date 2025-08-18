@@ -1,0 +1,78 @@
+filetype plugin indent on
+syntax on
+
+" Set cursor mode: bar in insert, underline in replace
+let &t_SI = "\<Esc>[5 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
+
+set autoindent
+set autoread
+set backspace=indent,eol,start
+set breakindent
+set colorcolumn=+1
+set complete-=i
+set completeopt=menu,menuone
+set confirm
+set display=truncate
+set expandtab
+set formatoptions+=j
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set lazyredraw
+set linebreak
+set list
+set listchars=tab:>\ ,trail:-,nbsp:+
+set nolangremap
+set nostartofline
+set noswapfile
+set nrformats-=octal
+set ruler
+set scrolloff=2
+set shiftwidth=4
+set showcmd
+set sidescrolloff=5
+set smartcase
+set smarttab
+set tags=./tags;,tags
+set ttimeout
+set ttimeoutlen=100
+set undodir=~/.vim/undo//
+set undofile
+set wildcharm=<Tab>
+set wildignore+=*.pyc,__pycache__,.DS_Store,*~,#*#,*.o
+set wildignorecase
+set wildmenu
+set wildmode=longest:full,full
+
+nnoremap <C-L> <Cmd>nohlsearch<Bar>diffupdate<CR><C-L>
+
+nnoremap <Space>w <Cmd>w<CR>
+nnoremap <Space>b :ls<CR>:b<Space>
+nnoremap <Space>e :e %:p:h/<Tab>
+
+function! Sort(type, ...) abort
+    '[,']sort
+    call setpos('.', getpos("''"))
+endfunction
+nnoremap gs m'<Cmd>set operatorfunc=Sort<CR>g@
+xnoremap gs :sort<CR>
+
+cnoremap <expr> <C-P> wildmenumode() ? '<C-P>' : '<Up>'
+cnoremap <expr> <C-N> wildmenumode() ? '<C-N>' : '<Down>'
+
+augroup init
+  autocmd!
+
+  " Create missing parent directories automatically
+  autocmd BufNewFile * autocmd BufWritePre <buffer> ++once call mkdir(expand('%:h'), 'p')
+
+  " Restore cursor position (except for git commits and rebases)
+  autocmd BufRead * if &ft !~# 'commit\|rebase' | exec 'silent! normal! g`"' | endif
+
+  " Don't show trailing spaces in insert mode
+  autocmd InsertEnter * setlocal listchars-=trail:-
+  autocmd InsertLeave * setlocal listchars+=trail:-
+augroup END
