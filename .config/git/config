@@ -1,0 +1,89 @@
+[user]
+	name = Lauri Heiskanen
+	email = lauri@nimble.fi
+[alias]
+	co = checkout
+	c = commit
+	ls = ls-files
+	rs = reset
+	rb = rebase
+	l = log
+	lg = log --oneline --decorate --graph
+	d = diff
+	ds = diff --staged
+	a = add
+	b = branch -vv
+	f = fetch
+	m = merge
+	p = push
+	pf = push --force-with-lease
+	snapshot = !git stash && git stash apply -q
+	t = tag
+	s = -p status
+	ss = snapshot
+	st = status
+	ca = commit --amend
+	sw = switch
+	re = restore
+	ctags = !.git/ctags
+	dt = difftool
+	g = grep
+[commit]
+	verbose = true
+[sendemail]
+	annotate = yes
+	confirm = auto
+	sendmailCmd = msmtp
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[grep]
+	lineNumber = true
+	column = true
+	patternType = extended
+[color]
+	ui = auto
+[log]
+	date = local
+[pull]
+	rebase = true
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[init]
+	defaultBranch = master
+	templateDir = ~/.config/git/template
+[status]
+	showStash = true
+[mergetool "fugitive"]
+	cmd = nvim -c \"Gvdiffsplit!\" \"$MERGED\"
+[merge]
+	tool = fugitive
+	conflictstyle = zdiff3
+[diff]
+	tool = difftastic
+	algorithm = histogram
+[difftool]
+	prompt = false
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+	difftool = true
+[rerere]
+	enabled = true
+[url "git@github.com:"]
+	insteadOf = gh:
+[fetch]
+	prune = true
+	pruneTags = true
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[include]
+	path = local.inc
+[format]
+	notes = true

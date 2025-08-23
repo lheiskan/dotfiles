@@ -1,0 +1,2 @@
+#!/bin/sh -eu
+"$(git rev-parse --git-dir)"/ctags >/dev/null 2>&1 &
