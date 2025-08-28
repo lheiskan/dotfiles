@@ -47,3 +47,5 @@ __pycache__
 *.xz
 *.zip
 *.7z
+
+**/.claude/settings.local.json
