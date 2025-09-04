@@ -43,19 +43,6 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = false
 
-# https://ghostty.org/docs/help/macos-tiling-wms
-# 
-# If Ghostty tabs are still being rendered as separate windows, 
-# try replacing "layout tiling" with "layout  floating". Note 
-# that this will cause the Ghostty window to be floating on 
-# initial startup. You can manually unfloat the window 
-# (alt+shift+; followed by f by default).
-[[on-window-detected]]
-if.app-id="com.mitchellh.ghostty"
-run= [
-  "layout tiling",
-]
-
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]

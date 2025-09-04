@@ -39,6 +39,10 @@ if executable('rg')
   set grepprg=rg\ --vimgrep\ --smart-case
 endif
 
+inoremap <C-r>rb 🤖
+inoremap <C-r>hs 🤝
+inoremap <C-r>br 🧠
+
 inoremap <C-Space> <C-X><C-O>
 
 nnoremap <Space>pv <Cmd>:lua require("mini.files").open()<Cr>

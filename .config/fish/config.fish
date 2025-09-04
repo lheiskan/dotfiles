@@ -12,3 +12,10 @@ if command -sq nvim
 end
 
 set -gx LSCOLORS ExGxcxdxCxegDxabagacad
+
+# =====================================================
+# Optional machine local settings
+# =====================================================
+if test -f ~/.fish
+    source ~/.fish
+end
