@@ -106,6 +106,7 @@ cnoremap <expr> <C-J> pumvisible() ? '<Down><Tab>' : '<C-J>'
 cnoremap <expr> <C-K> pumvisible() ? '<Up><Tab>' : '<C-K>'
 inoremap <expr> <C-C> pumvisible() ? '<C-E>' : '<C-C>'
 inoremap <expr> <CR> pumvisible() ? '<C-Y>' : '<CR>'
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>\<C-y>" : "\<Tab>"
 
 " Readline-style bindings in command and insert modes
 inoremap <C-B> <Left>
