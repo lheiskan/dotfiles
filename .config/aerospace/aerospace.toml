@@ -15,7 +15,7 @@ after-startup-command = []
 start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
-enable-normalization-flatten-containers = true
+enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
@@ -37,6 +37,9 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# change focus with wm focus
+on-focus-changed = ['move-mouse window-lazy-center']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-hyper-h key
@@ -127,7 +130,7 @@ automatically-unhide-macos-hidden-apps = false
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
     hyper-1 = 'workspace 1'
-    hyper-2 = 'workspace 2'
+    hyper-2 = 'workspace 2' 
     hyper-3 = 'workspace 3'
     hyper-4 = 'workspace 4'
     hyper-5 = 'workspace 5'
@@ -135,29 +138,8 @@ automatically-unhide-macos-hidden-apps = false
     hyper-7 = 'workspace 7'
     hyper-8 = 'workspace 8'
     hyper-9 = 'workspace 9'
-    # hyper-a = 'workspace A' # app mode
-    hyper-b = 'workspace B'
-    hyper-c = 'workspace C'
-    hyper-d = 'workspace D'
-    hyper-e = 'workspace E'
-    # hyper-f = 'workspace F' -- do not capture hyper-f (i.e. M-f, snacks picker follow mode)
-    hyper-g = 'workspace G'
-    hyper-i = 'workspace I'
-    hyper-m = 'workspace M'
-    hyper-n = 'workspace N'
-    hyper-o = 'workspace O'
-    hyper-p = 'workspace P'
-    hyper-q = 'workspace Q'
-    hyper-r = 'workspace R'
-    hyper-s = 'workspace S'
-    hyper-t = 'workspace T'
-    #hyper-u = 'workspace U'
-    hyper-v = 'workspace V'
-    hyper-w = 'workspace W'
-    hyper-x = 'workspace X'
-    hyper-y = 'workspace Y'
 
-# zoom to fullscreen
+    # zoom to fullscreen
     hyper-z = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
@@ -170,28 +152,6 @@ automatically-unhide-macos-hidden-apps = false
     hyper-shift-7 = 'move-node-to-workspace 7'
     hyper-shift-8 = 'move-node-to-workspace 8'
     hyper-shift-9 = 'move-node-to-workspace 9'
-#   hyper-shift-a = 'move-node-to-workspace A'
-    hyper-shift-b = 'move-node-to-workspace B'
-    hyper-shift-c = 'move-node-to-workspace C'
-    hyper-shift-d = 'move-node-to-workspace D'
-    hyper-shift-e = 'move-node-to-workspace E'
-# hyper-shift-f = 'move-node-to-workspace F'
-    hyper-shift-g = 'move-node-to-workspace G'
-    hyper-shift-i = 'move-node-to-workspace I'
-    hyper-shift-m = 'move-node-to-workspace M'
-    hyper-shift-n = 'move-node-to-workspace N'
-    hyper-shift-o = 'move-node-to-workspace O'
-    hyper-shift-p = 'move-node-to-workspace P'
-    hyper-shift-q = 'move-node-to-workspace Q'
-    hyper-shift-r = 'move-node-to-workspace R'
-    hyper-shift-s = 'move-node-to-workspace S'
-    hyper-shift-t = 'move-node-to-workspace T'
-#    hyper-shift-u = 'move-node-to-workspace U'
-    hyper-shift-v = 'move-node-to-workspace V'
-    hyper-shift-w = 'move-node-to-workspace W'
-    hyper-shift-x = 'move-node-to-workspace X'
-    hyper-shift-y = 'move-node-to-workspace Y'
-    hyper-shift-z = 'move-node-to-workspace Z'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     hyper-tab = 'workspace-back-and-forth'
