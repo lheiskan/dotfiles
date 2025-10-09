@@ -82,6 +82,9 @@ cnoremap <expr> / (getcmdtype() =~ '[/?]' && getcmdline() == '') ? "\<C-C>\<Esc>
 " Use gK for keywordprg, since K gets mapped to 'hover' in LSP buffers
 nnoremap gK K
 
+inoremap kj <esc>
+inoremap jk <esc>
+
 " Format whole buffer with formatprg without changing cursor position
 nnoremap <Space>f mzgggqG`z
 nnoremap gq<CR> mzgggqG`z
