@@ -1,0 +1,216 @@
+{
+	"title": "Sticky/Hyper",
+	"rules": [
+		{
+		"description":"Modifier layer right",
+		"manipulators":[
+				{
+					"from": {
+						"key_code": "caps_lock",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [
+						{
+							"set_variable": {
+								"name": "modifier-layer-right",
+								"value": 1
+							}
+						}
+					],
+					"to_after_key_up": [
+						{
+							"set_variable": {
+								"name": "modifier-layer-right",
+								"value": 0
+							}
+						}
+					],
+					"to_if_alone": [{ "key_code": "escape" }],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-right",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "semicolon",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [
+						{ "sticky_modifier": { "left_shift": "toggle" } },
+						{ "sticky_modifier": { "left_control": "toggle" } },
+						{ "sticky_modifier": { "left_option": "toggle" } },
+						{ "sticky_modifier": { "left_command": "toggle" } }
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-right",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "l",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [
+						{ "sticky_modifier": { "left_shift": "toggle" } },
+						{ "sticky_modifier": { "left_command": "toggle" } }
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-right",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "k",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [
+						{ "sticky_modifier": { "left_shift": "toggle" } },
+						{ "sticky_modifier": { "left_option": "toggle" } }
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-right",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "j",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [
+						{ "sticky_modifier": { "left_shift": "toggle" } },
+						{ "sticky_modifier": { "left_control": "toggle" } }
+					],
+					"type": "basic"
+				}
+		]},
+		{
+			"description": "Modifier layer left",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "semicolon",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [
+						{
+							"set_variable": {
+								"name": "modifier-layer-left",
+								"value": 1
+							}
+						}
+					],
+					"to_after_key_up": [
+						{
+							"set_variable": {
+								"name": "modifier-layer-left",
+								"value": 0
+							}
+						}
+					],
+					"to_if_alone": [{ "key_code": "semicolon" }],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-left",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "s",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [{ "sticky_modifier": { "left_control": "toggle" } }],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-left",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "d",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [{ "sticky_modifier": { "left_option": "toggle" } }],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-left",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "f",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [{ "sticky_modifier": { "left_command": "toggle" } }],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-left",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "a",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [
+						{ "sticky_modifier": { "left_control": "toggle" } },
+						{ "sticky_modifier": { "left_option": "toggle" } },
+						{ "sticky_modifier": { "left_command": "toggle" } }
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "modifier-layer-left",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "g",
+						"modifiers": { "optional": ["any"] }
+					},
+					"to": [{ "key_code": "caps_lock" }],
+					"type": "basic"
+				}
+			]
+		}
+	]
+}
+
