@@ -9,6 +9,16 @@
 (augroup lsp#
   (autocmd :LspAttach
     (fn [{: buf :data {: client_id}}]
+
+      ;; --- START: Fugitive buffer check ---
+      (let [bufname (vim.api.nvim_buf_get_name buf)]
+        (when (string.match bufname "^fugitive://")
+          (let [client (vim.lsp.get_client_by_id client_id)]
+            (when client (client.stop)))
+          ;; Stop further on_attach processing for this buffer
+          (return)))
+      ;; --- END: Fugitive buffer check ---
+
       (local client (vim.lsp.get_client_by_id client_id))
       (tset vim.b buf :lsp_client client.name)
       (when (client:supports_method :textDocument/documentHighlight)
