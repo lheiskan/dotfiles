@@ -160,6 +160,7 @@ augroup init
 augroup END
 
 lua<<
+vim.lsp.set_log_level("debug")
 vim.loader.enable()
 
 _G.nvim = vim.defaulttable(function(k)
