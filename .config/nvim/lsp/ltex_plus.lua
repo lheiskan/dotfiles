@@ -18,6 +18,7 @@ local function loadConfigsAndNotify(client)
   for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
     table.insert(words, word)
   end
+ 
   client.config.settings.ltex.dictionary = {
     ["en-US"] = words
   }
