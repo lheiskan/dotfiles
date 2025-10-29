@@ -8,23 +8,28 @@
                   (s 0) (.. s " " args)
                   (s n) s)
         makeprg (vim.fn.expandcmd (vim.trim makeprg))
-        state {}]
+        state {:has_data false}]
     (fn on-exit [{: code}]
       (vim.schedule (fn []
+                      (when (not state.has_data)
+                         (vim.fn.setqflist [] "r" { :title makeprg})
+                         (exec "cclose"))
                       (vim.fn.setqflist [] :a {:id state.qf :context {: code}})
                       (nvim.exec_autocmds :QuickFixCmdPost {:pattern "make" :modeline false})
                       (let [now (vim.uv.hrtime)
                             elapsed (/ (- now state.start) 1e9)
                             message (if (not= code 0)
-                                        (: "Command %s exited after %.2f seconds with error code %d" :format makeprg elapsed code)
-                                        (: "Command %s finished successfully after %.2f seconds" :format makeprg elapsed))]
+                                      (: "Command %s exited after %.2f seconds with error code %d" :format makeprg elapsed code)
+                                      (: "Command %s finished successfully after %.2f seconds" :format makeprg elapsed))]
                         (if (not focused)
-                            (notify "Neovim" message)
-                            (not= code 0)
-                            (print message))))))
+                          (notify "Neovim" message)
+                          (not= code 0)
+                          (print message))))))
+
     (fn on-data [err data]
       (assert (not err) err)
       (when data
+        (set state.has_data true)
         (vim.schedule #(let [lines (vim.split data "\n" {:trimempty true})]
                          (when (not state.qf)
                            (vim.fn.setqflist [] " " {:title makeprg :nr "$"})
