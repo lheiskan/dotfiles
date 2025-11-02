@@ -115,7 +115,8 @@ plug tpope.io/vim/fugitive
 plug github.com/gpanders/nvim-parinfer
 plug github.com/mfussenegger/nvim-lint
 plug github.com/echasnovski/mini.nvim
-plug github.com/dcampos/nvim-snippy
 plug github.com/nvim-treesitter/nvim-treesitter
+plug github.com/folke/sidekick.nvim
+plug github.com/zbirenbaum/copilot.lua
 
 packup

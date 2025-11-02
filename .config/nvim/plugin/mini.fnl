@@ -25,6 +25,7 @@
   (keymap :n "-" #(MiniFiles.open (nvim.buf_get_name 0))))
 (setup :mini.visits)
 (setup :mini.extra)
+(setup :mini.completion)
 (setup :mini.diff {:view {:style :sign :signs {:add :┃ :change :┃ :delete :▁}}
                    :delay {:text_change 50}}
   (keymap :n "yoD" MiniDiff.toggle_overlay)
@@ -44,6 +45,7 @@
   (keymap :n "<Space>/" MiniPick.builtin.grep_live)
   (keymap :n "<Space>b" MiniPick.builtin.buffers)
   (keymap :n "<M-S-/>" MiniPick.builtin.help)
+  (keymap :n "<M-?>" MiniPick.builtin.help)
 
   (when MiniExtra
     (keymap :n "<Space>r" MiniExtra.pickers.visit_paths)
