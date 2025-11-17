@@ -1,40 +1,40 @@
-vim.lsp.config["sourcekit"] = {
-    cmd = { "sourcekit-lsp" },
-    capabilities = {
-        textDocument = {
-            diagnostic = {
-                dynamicRegistration = true,
-                relatedDocumentSupport = true
-            }
-        },
-        workspace = {
-            didChangeWatchedFiles = {
-                dynamicRegistration = true
-            }
-        }
+---@brief
+---
+--- https://github.com/swiftlang/sourcekit-lsp
+---
+--- Language server for Swift and C/C++/Objective-C.
+
+local util = require 'lspconfig.util'
+
+---@type vim.lsp.Config
+return {
+  cmd = { 'sourcekit-lsp' },
+  filetypes = { 'swift', 'objc', 'objcpp', 'c', 'cpp' },
+  root_dir = function(bufnr, on_dir)
+    local filename = vim.api.nvim_buf_get_name(bufnr)
+    on_dir(
+      util.root_pattern 'buildServer.json'(filename)
+        or util.root_pattern('*.xcodeproj', '*.xcworkspace')(filename)
+        -- better to keep it at the end, because some modularized apps contain multiple Package.swift files
+        or util.root_pattern('compile_commands.json', 'Package.swift')(filename)
+        or vim.fs.dirname(vim.fs.find('.git', { path = filename, upward = true })[1])
+    )
+  end,
+  get_language_id = function(_, ftype)
+    local t = { objc = 'objective-c', objcpp = 'objective-cpp' }
+    return t[ftype] or ftype
+  end,
+  capabilities = {
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
     },
-    root_markers = { ".xcodeproj", ".xcworkspace", "Package.swift", ".git" },
-    filetypes = { "swift", "objc", "objcpp", "c", "cpp" },
-    get_language_id = function(bufnr, filetype) 
-        local t = { objc = 'objective-c', objcpp = 'objective-cpp' }
-        return t[ftype] or ftype
-    end,
-    on_attach = function(client, bufnr)
-        local opts = { buffer = bufnr, noremap = true, silent = true }
-
-        -- Disable CodeLens for Swift files (not supported by sourcekit atm)
-        if vim.bo[bufnr].filetype == "swift" then
-          client.server_capabilities.codeLensProvider = nil
-        end
-
-        -- Go to definition
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-
-        -- Optional extras:
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    end,
+    textDocument = {
+      diagnostic = {
+        dynamicRegistration = true,
+        relatedDocumentSupport = true,
+      },
+    },
+  },
 }
-
