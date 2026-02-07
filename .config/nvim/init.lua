@@ -34,21 +34,11 @@ vim.keymap.set("n", "<leader>@", function()
 end, { desc = "Find and pick from notes" })
 
 vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
 	{ src = "https://github.com/echasnovski/mini.pick" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/Saghen/blink.cmp" },
-	{ src = "https://github.com/rafamadriz/friendly-snippets.git" },
-})
-
-require("nvim-treesitter.configs").setup({
-	ensure_installed = { "go", "svelte", "typescript", "html", "javascript" },
-	highlight = true,
-	modules = {},
-	sync_install = false,
-	ignore_install = {},
-	auto_install = false,
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
+	{ src = "https://github.com/MeanderingProgrammer/treesitter-modules.nvim" },
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -63,7 +53,6 @@ vim.cmd("set completeopt+=noselect")
 
 vim.keymap.set("n", "<leader>e", ":Ex<CR>")
 
-vim.cmd("colorscheme vague")
 require("mini.pick").setup()
 vim.keymap.set("n", "<leader>f", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>h", ":Pick help<CR>")
@@ -74,4 +63,68 @@ vim.lsp.enable({ "lua_ls", "tinymist" })
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader>ld", function()
 	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end)
+
+-- configuration
+require("nvim-treesitter-textobjects").setup {
+  select = {
+    -- Automatically jump forward to textobj, similar to targets.vim
+    lookahead = true,
+    -- You can choose the select mode (default is charwise 'v')
+    --
+    -- Can also be a function which gets passed a table with the keys
+    -- * query_string: eg '@function.inner'
+    -- * method: eg 'v' or 'o'
+    -- and should return the mode ('v', 'V', or '<c-v>') or a table
+    -- mapping query_strings to modes.
+    selection_modes = {
+      ['@parameter.outer'] = 'v', -- charwise
+      ['@function.outer'] = 'V', -- linewise
+      -- ['@class.outer'] = '<c-v>', -- blockwise
+    },
+    -- If you set this to `true` (default is `false`) then any textobject is
+    -- extended to include preceding or succeeding whitespace. Succeeding
+    -- whitespace has priority in order to act similarly to eg the built-in
+    -- `ap`.
+    --
+    -- Can also be a function which gets passed a table with the keys
+    -- * query_string: eg '@function.inner'
+    -- * selection_mode: eg 'v'
+    -- and should return true of false
+    include_surrounding_whitespace = false,
+  },
+}
+
+require('treesitter-modules').setup({
+    incremental_selection = {
+        enable = true,
+        disable = false,
+        -- set value to `false` to disable individual mapping
+        -- node_decremental captures both node_incremental and scope_incremental
+        keymaps = {
+            init_selection = '<CR>',
+            node_incremental = '<CR>',
+            scope_incremental = '<TAB>',
+            node_decremental = '<S-TAB>',
+        },
+    },
+})
+
+-- keymaps
+-- You can use the capture groups defined in `textobjects.scm`
+vim.keymap.set({ "x", "o" }, "af", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "if", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ac", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ic", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@class.inner", "textobjects")
+end)
+-- You can also use captures from other query groups like `locals.scm`
+vim.keymap.set({ "x", "o" }, "as", function()
+  require "nvim-treesitter-textobjects.select".select_textobject("@local.scope", "locals")
 end)
