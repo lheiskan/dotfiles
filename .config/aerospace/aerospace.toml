@@ -103,42 +103,6 @@ automatically-unhide-macos-hidden-apps = false
     # end tell'
     # '''
     # hyper-a = 'exec-and-forget open -n /Applications/Zen.app'
-
-    # Modes
-    hyper-a = 'mode app'    # launch applications
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-    hyper-slash = 'layout tiles horizontal vertical'
-    hyper-comma = 'layout accordion horizontal vertical'
-    hyper-period = 'layout tiling floating'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    hyper-h = 'focus left'
-    hyper-j = 'focus down'
-    hyper-k = 'focus up'
-    hyper-l = 'focus right'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move
-    hyper-shift-h = 'move left'
-    hyper-shift-j = 'move down'
-    hyper-shift-k = 'move up'
-    hyper-shift-l = 'move right'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#resize
-    hyper-minus = 'resize smart -50'
-    hyper-equal = 'resize smart +50'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    hyper-1 = 'workspace 1'
-    hyper-2 = 'workspace 2' 
-    hyper-3 = 'workspace 3'
-    hyper-4 = 'workspace 4'
-    hyper-5 = 'workspace 5'
-    hyper-6 = 'workspace 6'
-    hyper-7 = 'workspace 7'
-    hyper-8 = 'workspace 8'
-    hyper-9 = 'workspace 9'
-
     fn-1 = 'workspace 1'
     fn-2 = 'workspace 2'
     fn-3 = 'workspace 3'
@@ -161,6 +125,8 @@ automatically-unhide-macos-hidden-apps = false
 		fn-z = 'fullscreen'	
     fn-tab = 'workspace-back-and-forth'
 		fn-r = 'reload-config'
+		fn-c = 'flatten-workspace-tree'
+    fn-esc = 'mode main'
 
     fn-slash = 'layout tiles horizontal vertical'
     fn-comma = 'layout accordion horizontal vertical'
@@ -182,27 +148,13 @@ automatically-unhide-macos-hidden-apps = false
     fn-minus = 'resize smart -50'
     fn-equal = 'resize smart +50'
 
+    fn-ctrl-h = 'join-with left'
+    fn-ctrl-j = 'join-with down'
+    fn-ctrl-k = 'join-with up'
+    fn-ctrl-l = 'join-with right'
+
     # zoom to fullscreen
     hyper-z = 'fullscreen'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    hyper-shift-1 = 'move-node-to-workspace 1'
-    hyper-shift-2 = 'move-node-to-workspace 2'
-    hyper-shift-3 = 'move-node-to-workspace 3'
-    hyper-shift-4 = 'move-node-to-workspace 4'
-    hyper-shift-5 = 'move-node-to-workspace 5'
-    hyper-shift-6 = 'move-node-to-workspace 6'
-    hyper-shift-7 = 'move-node-to-workspace 7'
-    hyper-shift-8 = 'move-node-to-workspace 8'
-    hyper-shift-9 = 'move-node-to-workspace 9'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-    hyper-tab = 'workspace-back-and-forth'
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-    hyper-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-    hyper-shift-semicolon = 'mode service'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
