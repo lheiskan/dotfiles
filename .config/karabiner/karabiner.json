@@ -4,6 +4,19 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Aerospace Toggle fullscreen",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "return_or_enter",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "shell_command": "/Users/lauri/github/Aerospace/.debug/aerospace fullscreen" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Modifier layer right",
                         "manipulators": [
                             {

@@ -32,6 +32,9 @@ end, { desc = "Open today's note" })
 vim.keymap.set("n", "<leader>@", function()
 	MiniPick.builtin.files(nil, { source = { cwd = vim.fn.expand("~/github/notes") } })
 end, { desc = "Find and pick from notes" })
+vim.keymap.set("n", "<leader>3", function()
+	MiniPick.builtin.files(nil, { source = { cwd = vim.fn.expand("~/.config") } })
+end, { desc = "Find and pick from configs" })
 
 vim.pack.add({
 	{ src = "https://github.com/echasnovski/mini.pick" },
