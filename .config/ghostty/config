@@ -45,3 +45,5 @@ keybind = shift+enter=text:\n
 
 # quick terminal launch via cmd+`
 keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+macos-option-as-alt = right
