@@ -35,6 +35,10 @@ end, { desc = "Find and pick from notes" })
 vim.keymap.set("n", "<leader>3", function()
 	MiniPick.builtin.files(nil, { source = { cwd = vim.fn.expand("~/.config") } })
 end, { desc = "Find and pick from configs" })
+vim.keymap.set("n", "<leader>4", function()
+	local file = vim.fn.expand("~/github/notes/notes/todo.md")
+	vim.cmd.edit(file)
+end, { desc = "Open todo" })
 
 vim.pack.add({
 	{ src = "https://github.com/echasnovski/mini.pick" },
@@ -69,65 +73,92 @@ vim.keymap.set("n", "<leader>ld", function()
 end)
 
 -- configuration
-require("nvim-treesitter-textobjects").setup {
-  select = {
-    -- Automatically jump forward to textobj, similar to targets.vim
-    lookahead = true,
-    -- You can choose the select mode (default is charwise 'v')
-    --
-    -- Can also be a function which gets passed a table with the keys
-    -- * query_string: eg '@function.inner'
-    -- * method: eg 'v' or 'o'
-    -- and should return the mode ('v', 'V', or '<c-v>') or a table
-    -- mapping query_strings to modes.
-    selection_modes = {
-      ['@parameter.outer'] = 'v', -- charwise
-      ['@function.outer'] = 'V', -- linewise
-      -- ['@class.outer'] = '<c-v>', -- blockwise
-    },
-    -- If you set this to `true` (default is `false`) then any textobject is
-    -- extended to include preceding or succeeding whitespace. Succeeding
-    -- whitespace has priority in order to act similarly to eg the built-in
-    -- `ap`.
-    --
-    -- Can also be a function which gets passed a table with the keys
-    -- * query_string: eg '@function.inner'
-    -- * selection_mode: eg 'v'
-    -- and should return true of false
-    include_surrounding_whitespace = false,
-  },
-}
+require("nvim-treesitter-textobjects").setup({
+	select = {
+		-- Automatically jump forward to textobj, similar to targets.vim
+		lookahead = true,
+		-- You can choose the select mode (default is charwise 'v')
+		--
+		-- Can also be a function which gets passed a table with the keys
+		-- * query_string: eg '@function.inner'
+		-- * method: eg 'v' or 'o'
+		-- and should return the mode ('v', 'V', or '<c-v>') or a table
+		-- mapping query_strings to modes.
+		selection_modes = {
+			["@parameter.outer"] = "v", -- charwise
+			["@function.outer"] = "V", -- linewise
+			-- ['@class.outer'] = '<c-v>', -- blockwise
+		},
+		-- If you set this to `true` (default is `false`) then any textobject is
+		-- extended to include preceding or succeeding whitespace. Succeeding
+		-- whitespace has priority in order to act similarly to eg the built-in
+		-- `ap`.
+		--
+		-- Can also be a function which gets passed a table with the keys
+		-- * query_string: eg '@function.inner'
+		-- * selection_mode: eg 'v'
+		-- and should return true of false
+		include_surrounding_whitespace = false,
+	},
+})
 
-require('treesitter-modules').setup({
-    incremental_selection = {
-        enable = true,
-        disable = false,
-        -- set value to `false` to disable individual mapping
-        -- node_decremental captures both node_incremental and scope_incremental
-        keymaps = {
-            init_selection = '<CR>',
-            node_incremental = '<CR>',
-            scope_incremental = '<TAB>',
-            node_decremental = '<S-TAB>',
-        },
-    },
+require("treesitter-modules").setup({
+	incremental_selection = {
+		enable = true,
+		disable = false,
+		-- set value to `false` to disable individual mapping
+		-- node_decremental captures both node_incremental and scope_incremental
+		keymaps = {
+			init_selection = "<CR>",
+			node_incremental = "<CR>",
+			scope_incremental = "<TAB>",
+			node_decremental = "<S-TAB>",
+		},
+	},
 })
 
 -- keymaps
 -- You can use the capture groups defined in `textobjects.scm`
 vim.keymap.set({ "x", "o" }, "af", function()
-  require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
+	require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
 end)
 vim.keymap.set({ "x", "o" }, "if", function()
-  require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
+	require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
 end)
 vim.keymap.set({ "x", "o" }, "ac", function()
-  require "nvim-treesitter-textobjects.select".select_textobject("@class.outer", "textobjects")
+	require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
 end)
 vim.keymap.set({ "x", "o" }, "ic", function()
-  require "nvim-treesitter-textobjects.select".select_textobject("@class.inner", "textobjects")
+	require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
 end)
 -- You can also use captures from other query groups like `locals.scm`
 vim.keymap.set({ "x", "o" }, "as", function()
-  require "nvim-treesitter-textobjects.select".select_textobject("@local.scope", "locals")
+	require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
 end)
+
+-- layout stuff
+function ensure_layout()
+	if #vim.api.nvim_tabpage_list_wins(0) == 1 then
+		vim.cmd("vsplit")
+	end
+	vim.cmd("wincmd =") -- equalize -> 50/50
+end
+
+function open_named_terminal(name, cmd)
+	ensure_layout()
+
+	-- look for existing buffer with this name
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_get_name(buf):match(name .. "$") then
+			-- show it in right window
+			vim.cmd("wincmd l")
+			vim.api.nvim_set_current_buf(buf)
+			return
+		end
+	end
+
+	-- not found -> create it
+	vim.cmd("wincmd l")
+	vim.cmd("terminal " .. cmd)
+	vim.cmd("file " .. name)
+end
