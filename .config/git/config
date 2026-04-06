@@ -1,6 +1,8 @@
 [user]
 	name = Lauri Heiskanen
-	email = lauri@nimble.fi
+	email = lauri.heiskanen@nimble.fi
+	signkey = 90E3CFF0055D6E16AA09429848FEBE3830CF7391!
+	signingkey = 90E3CFF0055D6E16AA09429848FEBE3830CF7391
 [alias]
 	co = checkout
 	c = commit
