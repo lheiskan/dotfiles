@@ -30,7 +30,7 @@
                                 "from": {
                                     "key_code": "quote",
                                     "modifiers": {
-                                        "mandatory": ["option"],
+                                        "mandatory": ["left_option"],
                                         "optional": []
                                     }
                                 },
@@ -70,7 +70,7 @@
                                 "from": {
                                     "key_code": "semicolon",
                                     "modifiers": {
-                                        "mandatory": ["option"],
+                                        "mandatory": ["left_option"],
                                         "optional": []
                                     }
                                 },
@@ -106,7 +106,7 @@
                                 "from": {
                                     "key_code": "open_bracket",
                                     "modifiers": {
-                                        "mandatory": ["option"],
+                                        "mandatory": ["left_option"],
                                         "optional": []
                                     }
                                 },
