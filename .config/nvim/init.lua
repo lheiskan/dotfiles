@@ -194,7 +194,6 @@ local function file_size()
 	return " \u{f016} " .. size_str .. " " -- nf-fa-file_o
 end
 
--- Mode indicators with Nerd Font icons
 local function mode_icon()
 	local mode = vim.fn.mode()
 	local modes = {
@@ -222,7 +221,7 @@ _G.file_size = file_size
 
 vim.cmd([[
   highlight StatusLineBold gui=bold cterm=bold
-]])
+  ]])
 
 -- Function to change statusline based on window focus
 local function setup_dynamic_statusline()
@@ -462,6 +461,7 @@ packadd("LuaSnip")
 
 local setup_treesitter = function()
 	local treesitter = require("nvim-treesitter")
+
 	treesitter.setup({})
 	local ensure_installed = {
 		"vim",
@@ -523,6 +523,7 @@ require("nvim-treesitter-textobjects").setup({
 })
 
 require("treesitter-modules").setup({
+	---@diagnostic disable-next-line: inject-field
 	incremental_selection = {
 		enable = true,
 		disable = false,
@@ -563,9 +564,25 @@ require("nvim-tree").setup({
 		group_empty = true,
 	},
 })
+
 vim.keymap.set("n", "<leader>e", function()
-	require("nvim-tree.api").tree.toggle()
-end, { desc = "Toggle NvimTree" })
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+	local root
+	for _, client in ipairs(clients) do
+		if client.root_dir then
+			root = client.root_dir
+			break
+		end
+	end
+	root = root or vim.fn.getcwd()
+	require("nvim-tree.api").tree.toggle({ path = root })
+end)
+
+vim.keymap.set("n", "<leader>E", function()
+	local file = vim.api.nvim_buf_get_name(0)
+	local dir = vim.fn.fnamemodify(file, ":h")
+	require("nvim-tree.api").tree.toggle({ path = dir })
+end)
 
 vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
@@ -794,15 +811,7 @@ require("blink.cmp").setup({
 	},
 })
 
-vim.lsp.config("lua_ls", {
-	settings = {
-		Lua = {
-			diagnostics = { globals = { "vim" } },
-			telemetry = { enable = false },
-		},
-	},
-})
-
+vim.lsp.config("lua_ls", {})
 vim.lsp.config("pyright", {})
 vim.lsp.config("bashls", {})
 vim.lsp.config("ts_ls", {})
@@ -949,7 +958,7 @@ local function FloatingTerminal()
 		end
 	end
 	if not has_terminal then
-		vim.fn.termopen(os.getenv("SHELL"))
+		vim.fn.jobstart(os.getenv("SHELL") or vim.o.shell, { term = true })
 	end
 
 	terminal_state.is_open = true
@@ -978,11 +987,6 @@ end, { noremap = true, silent = true, desc = "Close floating terminal" })
 vim.keymap.set("n", "<leader>o", ":update<CR> :source<CR>")
 vim.keymap.set("n", "<leader>w", ":write<CR>")
 vim.keymap.set("n", "<leader>m", ":make<CR>")
-vim.keymap.set("n", "gq", "mggg=Gg`g")
-vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y')
-vim.keymap.set({ "n", "v", "x" }, "<leader>d", '"+d')
-vim.keymap.set({ "n", "v", "x" }, "<leader>s", ":e #<CR>")
-vim.keymap.set({ "n", "v", "x" }, "<leader>S", ":sf #<CR>")
 
 -- ============================================================================
 -- File shortcuts
@@ -994,33 +998,19 @@ end, {
 	desc = "Edit init.lua",
 })
 vim.keymap.set("n", "<leader>!", function()
-	MiniPick.builtin.files(nil, { source = { cwd = vim.fn.stdpath("config") } })
+	require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
 end, { desc = "Find and pick from nvim configs" })
 vim.keymap.set("n", "<leader>2", function()
 	local file = vim.fn.expand("~/github/notes/notes/daily/" .. os.date("%Y-%m-%d") .. ".md")
 	vim.cmd.edit(file)
 end, { desc = "Open today's note" })
 vim.keymap.set("n", "<leader>@", function()
-	MiniPick.builtin.files(nil, { source = { cwd = vim.fn.expand("~/github/notes") } })
+	require("fzf-lua").files({ cwd = vim.fn.expand("~/github/notes") })
 end, { desc = "Find and pick from notes" })
 vim.keymap.set("n", "<leader>3", function()
-	MiniPick.builtin.files(nil, { source = { cwd = vim.fn.expand("~/.config") } })
+	require("fzf-lua").files({ cwd = vim.fn.expand("~/.config") })
 end, { desc = "Find and pick from configs" })
 vim.keymap.set("n", "<leader>4", function()
 	local file = vim.fn.expand("~/github/notes/notes/todo.md")
 	vim.cmd.edit(file)
 end, { desc = "Open todo" })
-
-vim.pack.add({})
-
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(ev)
-		local client = vim.lsp.get_client_by_id(ev.data.client_id)
-		if client:supports_method("textDocument/completion") then
-			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-		end
-	end,
-})
-vim.cmd("set completeopt+=noselect")
-
--- vim.keymap.set("n", "<leader>e", ":Ex<CR>")
